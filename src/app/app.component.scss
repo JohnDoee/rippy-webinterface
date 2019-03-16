@@ -1,0 +1,14 @@
+.navbar-icon {
+    margin-top: -7px;
+    margin-bottom: -7px;
+}
+
+.navbar-icon {
+    overflow: hidden;
+    transition-duration: 0.8s;
+    transition-property: transform;
+}
+.navbar-icon:hover {
+    transform: rotate(390deg);
+    -webkit-transform: rotate(390deg);
+}

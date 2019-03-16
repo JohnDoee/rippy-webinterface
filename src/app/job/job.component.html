@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 mt-2">
+      <h1>Jobs</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="input-group mb-3">
+        <input [(ngModel)]="url" type="text" class="form-control" placeholder="URL">
+        <div class="input-group-append">
+          <button class="btn btn-outline-primary" type="button" (click)="addJob()">Add URL</button>
+        </div>
+      </div>
+      <ul class="list-group" *ngIf="jobs">
+        <ng-container *ngFor="let job of jobs">
+          <li class="list-group-item" *ngIf="!job.hidden">
+            <p class="ellipse"><b>URL:</b> {{ job.url }}</p>
+            <p *ngIf="job.name" class="ellipse"><b>Name:</b> {{ job.name }}</p>
+            <p><b>ID:</b> {{ job.id }} <b>Status:</b> {{ job.status | titlecase }}<span *ngIf="job.statusMessage"> - {{ job.statusMessage }}</span></p>
+            <p><b>Last updated:</b> {{ job.lastUpdated | date:'short' }} <b>Added:</b> {{ job.created | date:'short' }}</p>
+            <p *ngIf="job.status === 'downloading'"><progressbar [max]="job.progress && job.progress.total || 0" [value]="job.progress && job.progress.progress || 0" type="success" [striped]="true">
+              {{ job.progressAsPercent }}
+            </progressbar></p>
+            <p>
+              <a [href]="job.path" *ngIf="job.status === 'success'" class="btn btn-sm btn-success">Download</a>
+              <button *ngIf="job.status === 'pending'" class="btn btn-sm btn-warning ml-1" (click)="cancelJob(job)">Cancel</button>
+              <button *ngIf="job.status === 'failed' || job.status === 'success' || job.status === 'cancelled'" class="btn btn-sm btn-info ml-1" (click)="hideJob(job)">Hide</button>
+            </p>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<header>
+  <div class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container d-flex justify-content-between">
+      <a [routerLink]="['']" class="navbar-brand d-flex align-items-center">
+        <img class="navbar-icon mr-1" src="/assets/icons/android-icon-48x48.png" />
+        <strong>Ripit with Rippy</strong>
+      </a>
+      <a *ngIf="parseBrowserUrl" class="py-2 d-none d-md-inline-block text-light" target="_blank" [href]="parseBrowserUrl">Open parse browser</a>
+    </div>
+  </div>
+</header>
+
+<router-outlet></router-outlet>

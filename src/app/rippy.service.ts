@@ -113,6 +113,10 @@ export class RippyService {
     return this.http.post(`/api/jobs/${ job.id }/hide/`, {});
   }
 
+  public retryJob(job: Job) {
+    return this.http.post(`/api/jobs/${ job.id }/retry/`, {});
+  }
+
   public getParseBrowserURL() {
     return this.http.get('/api/config/').pipe(
       map(r => r['parse_browser_url'])

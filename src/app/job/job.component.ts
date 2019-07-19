@@ -14,6 +14,7 @@ export class JobComponent implements OnInit, OnDestroy {
   public jobs: Array<Job>;
 
   public url: string = '';
+  public showFullUrl = new Map<number, boolean>();
 
   constructor(public rippy: RippyService) { }
 
@@ -26,6 +27,10 @@ export class JobComponent implements OnInit, OnDestroy {
     if (this.sub) {
       this.sub.unsubscribe();
     }
+  }
+
+  triggerShowFullUrl(job: Job) {
+    this.showFullUrl[job.id] = true;
   }
 
   jobEvents(event: object) {
@@ -67,6 +72,10 @@ export class JobComponent implements OnInit, OnDestroy {
 
   hideJob(job: Job) {
     this.rippy.hideJob(job).subscribe();
+  }
+
+  retryJob(job: Job) {
+    this.rippy.retryJob(job).subscribe();
   }
 
   cancelJob(job: Job) {

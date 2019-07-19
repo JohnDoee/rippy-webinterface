@@ -16,8 +16,8 @@
       <ul class="list-group" *ngIf="jobs">
         <ng-container *ngFor="let job of jobs">
           <li class="list-group-item" *ngIf="!job.hidden">
-            <p class="ellipse"><b>URL:</b> {{ job.url }}</p>
-            <p *ngIf="job.name" class="ellipse"><b>Name:</b> {{ job.name }}</p>
+            <p (click)="triggerShowFullUrl(job)" [ngClass]="{'ellipse-text': !showFullUrl[job.id], 'full-text': showFullUrl[job.id]}"><b>URL:</b>&nbsp;{{ job.url }}</p>
+            <p *ngIf="job.name" class="ellipse-text"><b>Name:</b> {{ job.name }}</p>
             <p><b>ID:</b> {{ job.id }} <b>Status:</b> {{ job.status | titlecase }}<span *ngIf="job.statusMessage"> - {{ job.statusMessage }}</span></p>
             <p><b>Last updated:</b> {{ job.lastUpdated | date:'short' }} <b>Added:</b> {{ job.created | date:'short' }}</p>
             <p *ngIf="job.status === 'downloading'"><progressbar [max]="job.progress && job.progress.total || 0" [value]="job.progress && job.progress.progress || 0" type="success" [striped]="true">
@@ -27,6 +27,7 @@
               <a [href]="job.path" *ngIf="job.status === 'success'" class="btn btn-sm btn-success">Download</a>
               <button *ngIf="job.status === 'pending'" class="btn btn-sm btn-warning ml-1" (click)="cancelJob(job)">Cancel</button>
               <button *ngIf="job.status === 'failed' || job.status === 'success' || job.status === 'cancelled'" class="btn btn-sm btn-info ml-1" (click)="hideJob(job)">Hide</button>
+              <button *ngIf="job.status === 'failed' || job.status === 'cancelled'" class="btn btn-sm btn-primary ml-1" (click)="retryJob(job)">Retry</button>
             </p>
           </li>
         </ng-container>
